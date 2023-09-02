@@ -20,6 +20,19 @@ const HdInner = styled.div`
 		font-size: 1.2rem;
 		margin-right: 1.5rem;
 	}
+	li {
+		text-align: center;
+		font-size: 1.2rem;
+		margin-right: 1.5rem;
+	}
+	.logo{
+		width: 65px;
+		margin: 0;
+	}
+	.logo_a {
+		width: 100%;
+		display: block;
+	}
 `;
 
 const NavList = styled.ul`
@@ -32,8 +45,8 @@ function Header() {
 			<TopContainer>
 				<div className="hd_Inner">
 					<HdInner>
-						<div className="logo" style={{ width: '65px', margin: '0' }}>
-							<a href="/" style={{ width: '100%', display: 'block' }}>
+						<div className="logo">
+							<a className="logo_a" href="/">
 								<img className="logImag" src="assets/logo.png" alt="로고" style={{ width: '100%' }} />
 							</a>
 						</div>
