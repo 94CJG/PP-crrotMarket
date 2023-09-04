@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch, BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch,} from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import Header from "./routes/Header";
 import Main from "./routes/Main";
@@ -61,12 +61,11 @@ body
 
 function App() {
   return (
-    <BrowserRouter>
       <Router>
         <GlobalStyle />
         <Header />
         <Switch>
-          <Route path="">
+          <Route exact path="/">
             <Main />
           </Route>
           <Route path="/HotItems">
@@ -74,7 +73,6 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </BrowserRouter>
   );
 }
 
