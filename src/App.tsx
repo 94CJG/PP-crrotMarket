@@ -1,6 +1,9 @@
+import { BrowserRouter as Router, Route, Switch, BrowserRouter } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-//import styled from "styled-components";
-import Header from "./Header";
+import Header from "./routes/Header";
+import Main from "./routes/Main";
+import HotItems from "./routes/HotItems";
+
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400&display=swap');
@@ -58,16 +61,21 @@ body
 
 function App() {
   return (
-    <>
-      <GlobalStyle />
-      <Header />
-    </>
+    <BrowserRouter>
+      <Router>
+        <GlobalStyle />
+        <Header />
+        <Switch>
+          <Route path="">
+            <Main />
+          </Route>
+          <Route path="/HotItems">
+            <HotItems />
+          </Route>
+        </Switch>
+      </Router>
+    </BrowserRouter>
   );
 }
 
 export default App;
-
-/**
- * 오류: 글로벌 스타일 컴포넌트가 적용이 안됨.
- * 해결: 전체적인 태그를 적용 후 그 안에 작성 해주기.
- */
