@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 import Header from "./routes/Header";
 import Main from "./routes/Main";
 import HotItems from "./routes/HotItems";
+import Trust from "./routes/Trust";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -70,6 +71,9 @@ function App() {
           </Route>
           <Route path="/HotItems">
             <HotItems />
+          </Route>
+          <Route path="/Trust">
+            <Trust />
           </Route>
         </Switch>
       </Router>

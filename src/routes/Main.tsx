@@ -13,14 +13,35 @@ const ImgDiv = css`
 	height: 700px;
 `;
 
-// const AllBtn = css`
-// 	background-color: #E9ECEF;
-// 	color: #212529;
-// 	border: none;
-// 	border-radius: 6px;
-// 	padding: 12px 2rem;
-// 	margin-right: 10px;
-// `;
+const AllBtn = css`
+	background-color: #E9ECEF;
+	color: #212529;
+	border: none;
+	border-radius: 6px;
+	padding: 12px 2rem;
+	margin-right: 10px;
+`;
+
+const ServiceTitle = css`
+	font-weight: 700;
+	font-size: 18px;
+	color: #FF6F0F;
+	margin-bottom: 10px;
+`;
+
+const CustomH1 = css`
+	font-size: 40px;
+	font-weight: 700;
+	padding-bottom: 20px;
+	line-height: 57px;
+`;
+
+const CustomP = css`
+	font-size: 20px;
+	line-height: 30px;
+	font-weight: 400;
+	color: #7c7c7c;
+`;
 //end
 
 const MainBg = styled.div`
@@ -40,15 +61,10 @@ const MainTop = styled.div`
 		padding-top: 20px;
 	}
 	h1 {
-		font-size: 50px;
-		font-weight: 700;
-		padding-bottom: 20px;
+		${CustomH1}
 	}
 	p {
-		font-size: 20px;
-		line-height: 30px;
-		font-weight: 400;
-		color: #7c7c7c;
+		${CustomP}
 	}
 `;
 
@@ -77,8 +93,8 @@ const TopImg = styled.div`
 `;
 
 const MainMid = styled.div`
-	display: block;
 	background-color: #f9f9f9;
+	display: block;
 `;
 
 const MidImg = styled.div`
@@ -88,18 +104,49 @@ const MidImg = styled.div`
 	}
 `;
 
-const MidBtn = styled(Link)`
-
+const MidCnt = styled.div`
+display: flex;
+width: 1024px;
+margin: 0 auto;
+.home-main-mid {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+h1 {
+	${CustomH1}
+}
+.service-title {
+	${ServiceTitle}
+}
+p {
+	${CustomP}
+}
+.btn-text {
+		font-size: 16px;
+    line-height: 27px;
+    font-weight: 700;
+		background-color: #E9ECEF;
+    color: #212529;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    padding: 12px 2rem;
+    display: inline-block;
+    margin-right: 10px;
+		margin-top: 20px;
+}
 `;
 
 function Main() {
 	return (
 		<div id="main">
+			{/* 상단 */}
 			<MainBg>
 				<MainTop>
 					<div className="home-main-desc">
-						<h1 className="home-main-title">당신 근처의 <br /> 지역 생활 커뮤니티</h1>
-						<p className="">동네라서 가능한 모든것 <br /> 당근에서 가까운 이웃과 함께 해요.</p>
+						<h1>당신 근처의 <br /> 지역 생활 커뮤니티</h1>
+						<p>동네라서 가능한 모든것 <br /> 당근에서 가까운 이웃과 함께 해요.</p>
 						<div id="download-btn" style={{ display: "flex" }} >
 							<BtnStore to="https://play.google.com/store/apps/details?id=com.towneers.www">Google Play</BtnStore>
 							<BtnStore to="https://apps.apple.com/app/id1018769995">App Store</BtnStore>
@@ -110,20 +157,28 @@ function Main() {
 					</div>
 					{/* <img src="./assets/img01.png" alt="메인 이미지" /> */}
 				</MainTop>
-				<MainMid>
-					<div>
-						<MidImg>
-							<img src="assets/img02.png" alt="중단 이미지2" />
-						</MidImg>
-						<div>
-							<p className="servic-title">중고거래</p>
-							<h1 className="home-main-title">믿을만한 <br /> 이웃 간 중고거래</h1>
-							<p className="servic-desc">동네 주민들과 가깝고 따뜻한 거래를<br />지금 경험해보세요.</p>
-							<MidBtn to="/HotItems">인기매물</MidBtn>
+			</MainBg>
+
+			{/* 중단 */}
+			<MainMid>
+				<MidCnt>
+					<MidImg>
+						<img src="assets/img02.png" alt="중단 이미지2" />
+					</MidImg>
+					<div className="home-main-mid">
+						<p className="service-title">중고거래</p>
+						<h1 className="home-main-title">믿을만한 <br /> 이웃 간 중고거래</h1>
+						<p className="servic-desc">동네 주민들과 가깝고 따뜻한 거래를<br />지금 경험해보세요.</p>
+						<div className="btn-box">
+							<Link to="/HotItems" className="btn-text">인기매물 보기</Link>
+							<Link to="/Trust" className="btn-text">믿을 수 있는 중고거래</Link>
 						</div>
 					</div>
-				</MainMid>
-			</MainBg>
+				</MidCnt>
+			</MainMid>
+
+			{/* 중단2 */}
+
 		</div>
 	);
 }
