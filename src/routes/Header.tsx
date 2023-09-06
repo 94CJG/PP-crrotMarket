@@ -80,7 +80,7 @@ function Header() {
 					</NavList>
 				</nav>
 				<div className="search">
-					<HdInput type="text" placeholder="물품이나 동네를 검색 해보세요" />
+					<HdInput type="text" placeholder="  물품이나 동네를 검색 해보세요" />
 					<HdTalk>채팅하기</HdTalk>
 				</div>
 			</HdInner>

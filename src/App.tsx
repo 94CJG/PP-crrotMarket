@@ -4,6 +4,8 @@ import Header from "./routes/Header";
 import Main from "./routes/Main";
 import HotItems from "./routes/HotItems";
 import Trust from "./routes/Trust";
+import Jobs from "./routes/Jobs";
+import Footer from "./routes/Footer"
 
 
 const GlobalStyle = createGlobalStyle`
@@ -68,12 +70,16 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Main />
+            <Footer />
           </Route>
           <Route path="/HotItems">
             <HotItems />
           </Route>
           <Route path="/Trust">
             <Trust />
+          </Route>
+          <Route path="/Jobs">
+            <Jobs />
           </Route>
         </Switch>
       </Router>

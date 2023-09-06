@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components"; // styled-components와 css 가져오기
 
-
-// css 재사용 코드
+// css 재사용 코드 start
 const ImgStyle = css`
 	width: 100%;
 	height: 100%;
@@ -13,14 +12,14 @@ const ImgDiv = css`
 	height: 700px;
 `;
 
-const AllBtn = css`
+/*const AllBtn = css`
 	background-color: #E9ECEF;
 	color: #212529;
 	border: none;
 	border-radius: 6px;
 	padding: 12px 2rem;
 	margin-right: 10px;
-`;
+`;*/
 
 const ServiceTitle = css`
 	font-weight: 700;
@@ -42,7 +41,7 @@ const CustomP = css`
 	font-weight: 400;
 	color: #7c7c7c;
 `;
-//end
+// css 재사용 코드 End
 
 const MainBg = styled.div`
 	background-color: #FFFAE0;
@@ -108,6 +107,7 @@ const MidCnt = styled.div`
 display: flex;
 width: 1024px;
 margin: 0 auto;
+justify-content: space-between;
 .home-main-mid {
 	display: flex;
 	flex-direction: column;
@@ -136,6 +136,53 @@ p {
     margin-right: 10px;
 		margin-top: 20px;
 }
+ul {
+	display: flex;
+	justify-content: space-between;
+}
+`;
+
+const MidThird = styled.div`
+	background-color: #FFF8F1;
+`;
+
+const MidCntTh = styled(MidCnt)`
+	.home-main-third {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		font-size: 14px;
+	}
+	.item-title {
+		margin: 0.8rem 0;
+	}
+
+	.item-desc {
+		width: 124px;
+    margin-right: 1rem;
+    margin-left: 0;
+		font-size: 13px;
+		color: #7c7c7c;
+		line-height: 15px;
+	}
+	ul {
+		margin-top: 4rem;
+	}
+`;
+
+const MidFourth = styled(MainMid)`
+	background-color: #f9f9f9;
+`;
+
+const MidCntFo = styled(MidCnt)`
+`;
+
+const MidFifth = styled(MainMid)`
+	background-color: #F6FDEC;
+`;
+
+const MidFi = styled(MidCnt)`
+	flex-direction: row-reverse;
 `;
 
 function Main() {
@@ -155,7 +202,6 @@ function Main() {
 							<img src="assets/img01.png" alt="상단 이미지" />
 						</TopImg>
 					</div>
-					{/* <img src="./assets/img01.png" alt="메인 이미지" /> */}
 				</MainTop>
 			</MainBg>
 
@@ -177,8 +223,82 @@ function Main() {
 				</MidCnt>
 			</MainMid>
 
-			{/* 중단2 */}
+			{/* 중단3 */}
+			<MidThird>
+				<MidCntTh>
+					<div className="home-main-third">
+						<p className="service-title">동네생활</p>
+						<h1 className="home-main-title">이웃만 아는 <br />동네 정보와 이야기</h1>
+						<p className="servic-desc">우리동네의 다양한 정보와 이야기를 <br />공감과 댓글로 나누어요.</p>
+						<ul className="item-box">
+							<li>
+								<div>
+									<img src="assets/icon01.svg" alt="동네모임" />
+								</div>
+								<div className="item-title">동네모임</div>
+								<div className="item-desc">
+									근처 이웃들과 동네 <br /> 이야기를 해보세요.
+								</div>
+							</li>
+							<li>
+								<div>
+									<img src="assets/icon02.svg" alt="동네질문" />
+								</div>
+								<div className="item-title">동네질문</div>
+								<div className="item-desc">
+									궁금한 게 있을 땐<br /> 이웃에 물어보세요.
+								</div>
+							</li>
+							<li>
+								<div>
+									<img src="assets/icon03.svg" alt="동네모임" />
+								</div>
+								<div className="item-title">동네분실센터</div>
+								<div className="item-desc">
+									무언가를 잃어버렸다면<br /> 글을 올려보세요.
+								</div>
+							</li>
+						</ul>
+					</div>
+					<MidImg>
+						<img src="assets/img03.png" alt="중단 이미지3" />
+					</MidImg>
+				</MidCntTh>
+			</MidThird>
 
+			{/* 중단4 */}
+			<MidFourth>
+				<MidCntFo>
+					<MidImg>
+						<img src="assets/img04.png" alt="중단 이미지4" />
+					</MidImg>
+					<div className="home-main-mid">
+						<p className="service-title">알바</p>
+						<h1 className="home-main-title">걸어서 10분! <br /> 동네 알바 구하기</h1>
+						<p className="servic-desc">당근하듯 쉽고, 편하게 <br /> 당근 알바로 동네 알바를 구할 수 있어요.</p>
+						<div className="btn-box">
+							<Link to="/Jobs" className="btn-text">내근처 알바 보기</Link>
+						</div>
+					</div>
+				</MidCntFo>
+			</MidFourth>
+
+			{/* 중단5 */}
+			<MidFifth>
+				<MidFi>
+					<MidImg>
+						<img src="assets/img05.png" alt="중단 이미지5" />
+					</MidImg>
+					<div className="home-main-mid">
+						<p className="service-title">동네가게</p>
+						<h1 className="home-main-title">내 근처에서 찾는<br /> 동네 가게</h1>
+						<p className="servic-desc">이웃들의 추천 후기를 확인하고 <br /> 동네 곳곳의 가게들을 찾을 수 있어요.</p>
+						<div className="btn-box">
+							<Link to="/Jobs" className="btn-text">당근 동네가게 보기</Link>
+						</div>
+					</div>
+				</MidFi>
+			</MidFifth>
 		</div>
 	);
 }
@@ -197,30 +317,5 @@ export default Main;
  * 진행 하면서 알게 된 것
  * 스타일 컴포넌트에 유틸리티 css 라는 것이 있다.
  * styled와 css의 다른점은 4번째줄를 함수를 만들고, styled안에 변수로 재사용 가능하다.
- */
-
-
-/**
- * 						<div>
-							<p>동네생활</p>
-							<h1>이웃만 아는 <br/>동네 정보와 이야기</h1>
-							<p>우리동네의 다양한 정보와 이야기를 <br/>공감과 댓글로 나누어요.</p>
-							<ul className="">
-								<li>
-									<div>이미지1</div>
-									<p>동네모임</p>
-									<p>근처 이웃들과 동네 이야기를 해보세요.</p>
-								</li>
-								<li>
-									<div>이미지2</div>
-									<p>동네질문</p>
-									<p>궁금한게 있을 땐 <br/> 이웃에 물어보세요.</p>
-								</li>
-								<li>
-									<div>이미지3</div>
-									<p>동네분실센터</p>
-									<p>무언가를 잃어버렸다면 <br/> 글을 올려보세요.</p>
-								</li>
-							</ul>
-						</div>
+ * 
  */
