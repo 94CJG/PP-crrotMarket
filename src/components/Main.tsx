@@ -294,7 +294,7 @@ function Main() {
 						<h1 className="home-main-title">내 근처에서 찾는<br /> 동네 가게</h1>
 						<p className="servic-desc">이웃들의 추천 후기를 확인하고 <br /> 동네 곳곳의 가게들을 찾을 수 있어요.</p>
 						<div className="btn-box">
-							<Link to="/Jobs" className="btn-text">당근 동네가게 보기</Link>
+							<Link to="/" className="btn-text">당근 동네가게 보기</Link>
 						</div>
 					</div>
 				</MidFi>

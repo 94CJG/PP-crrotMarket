@@ -72,11 +72,11 @@ function Header() {
 				</div>
 				<nav className="header_nav" role="navigation" aria-label="메인 메뉴">
 					<NavList>
-						<li>중고거래</li>
-						<li>동네가게</li>
-						<li>알바</li>
-						<li>부동산 직거래</li>
-						<li>중고차 직거래</li>
+						<li><Link to="/Fleamarket">중고거래</Link></li>
+						<li><Link to="/AreaStores">동네가게</Link></li>
+						<li><Link to="/Jobs">알바</Link></li>
+						<li><Link to="/Realty">부동산 직거래</Link></li>
+						<li><Link to="/Car">중고차 직거래</Link></li>
 					</NavList>
 				</nav>
 				<div className="search">
