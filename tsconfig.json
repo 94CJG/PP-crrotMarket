@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-, "routes/Main.tsx", "routes/HotItems.tsx", "routes/Header.tsx"  ]
+, "routes/Main.tsx", "routes/HotItems.tsx", "routes/Header.tsx", "routes/Trust.tsx", "routes/Jobs.tsx"  ]
 }

@@ -1,8 +1,13 @@
-import { BrowserRouter as Router, Route, Switch,} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-import Header from "./routes/Header";
-import Main from "./routes/Main";
+import Header from "./components/Header";
+import Main from "./components/Main";
 import HotItems from "./routes/HotItems";
+import Trust from "./routes/Trust";
+import Jobs from "./routes/Jobs";
+import Footer from "./components/Footer";
+import AreaStores from "./routes/AreaStores";
+import Fleamarket from "./routes/Fleamarket";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -61,18 +66,31 @@ body
 
 function App() {
   return (
-      <Router>
-        <GlobalStyle />
-        <Header />
-        <Switch>
-          <Route exact path="/">
-            <Main />
-          </Route>
-          <Route path="/HotItems">
-            <HotItems />
-          </Route>
-        </Switch>
-      </Router>
+    <Router>
+      <GlobalStyle />
+      <Header />
+      <Switch>
+        <Route exact path="/">
+          <Main />
+        </Route>
+        <Route path="/HotItems">
+          <HotItems />
+        </Route>
+        <Route path="/Trust">
+          <Trust />
+        </Route>
+        <Route path="/Jobs">
+          <Jobs />
+        </Route>
+        <Route path="/AreaStores">
+          <AreaStores />
+        </Route>
+        <Route path="/Fleamarket">
+          <Fleamarket />
+        </Route>
+      </Switch>
+      <Footer />
+    </Router>
   );
 }
 
