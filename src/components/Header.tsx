@@ -67,7 +67,7 @@ function Header() {
 			<HdInner>
 				<div className="logo">
 					<Link to="/" className="logo_a">
-						<img className="logImg" src="assets/logo.png" alt="로고" />
+						<img className="logImg" src="/assets/logo.png" alt="로고" />
 					</Link>
 				</div>
 				<nav className="header_nav" role="navigation" aria-label="메인 메뉴">
