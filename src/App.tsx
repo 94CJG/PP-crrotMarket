@@ -8,6 +8,7 @@ import Jobs from "./routes/Jobs";
 import Footer from "./components/Footer";
 import AreaStores from "./routes/AreaStores";
 import Fleamarket from "./routes/Fleamarket";
+import Login from "./routes/Login";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -87,6 +88,9 @@ function App() {
         </Route>
         <Route path="/Fleamarket">
           <Fleamarket />
+        </Route>
+        <Route path="/Logoin">
+          <Login />
         </Route>
       </Switch>
       <Footer />

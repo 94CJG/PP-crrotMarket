@@ -199,7 +199,7 @@ function Main() {
 							<BtnStore to="https://apps.apple.com/app/id1018769995">App Store</BtnStore>
 						</div>
 						<TopImg>
-							<img src="assets/img01.png" alt="상단 이미지" />
+							<img src="/assets/img01.png" alt="상단 이미지" />
 						</TopImg>
 					</div>
 				</MainTop>
@@ -209,7 +209,7 @@ function Main() {
 			<MainMid>
 				<MidCnt>
 					<MidImg>
-						<img src="assets/img02.png" alt="중단 이미지2" />
+						<img src="/assets/img02.png" alt="중단 이미지2" />
 					</MidImg>
 					<div className="home-main-mid">
 						<p className="service-title">중고거래</p>
@@ -233,7 +233,7 @@ function Main() {
 						<ul className="item-box">
 							<li>
 								<div>
-									<img src="assets/icon01.svg" alt="동네모임" />
+									<img src="/assets/icon01.svg" alt="동네모임" />
 								</div>
 								<div className="item-title">동네모임</div>
 								<div className="item-desc">
@@ -242,7 +242,7 @@ function Main() {
 							</li>
 							<li>
 								<div>
-									<img src="assets/icon02.svg" alt="동네질문" />
+									<img src="/assets/icon02.svg" alt="동네질문" />
 								</div>
 								<div className="item-title">동네질문</div>
 								<div className="item-desc">
@@ -251,7 +251,7 @@ function Main() {
 							</li>
 							<li>
 								<div>
-									<img src="assets/icon03.svg" alt="동네모임" />
+									<img src="/assets/icon03.svg" alt="동네모임" />
 								</div>
 								<div className="item-title">동네분실센터</div>
 								<div className="item-desc">
@@ -261,7 +261,7 @@ function Main() {
 						</ul>
 					</div>
 					<MidImg>
-						<img src="assets/img03.png" alt="중단 이미지3" />
+						<img src="/assets/img03.png" alt="중단 이미지3" />
 					</MidImg>
 				</MidCntTh>
 			</MidThird>
@@ -270,7 +270,7 @@ function Main() {
 			<MidFourth>
 				<MidCntFo>
 					<MidImg>
-						<img src="assets/img04.png" alt="중단 이미지4" />
+						<img src="/assets/img04.png" alt="중단 이미지4" />
 					</MidImg>
 					<div className="home-main-mid">
 						<p className="service-title">알바</p>
@@ -287,7 +287,7 @@ function Main() {
 			<MidFifth>
 				<MidFi>
 					<MidImg>
-						<img src="assets/img05.png" alt="중단 이미지5" />
+						<img src="/assets/img05.png" alt="중단 이미지5" />
 					</MidImg>
 					<div className="home-main-mid">
 						<p className="service-title">동네가게</p>
