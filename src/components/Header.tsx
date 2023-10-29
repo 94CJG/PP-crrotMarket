@@ -57,6 +57,7 @@ const Login = styled(Link)`
 	height: 2.5rem;
 	border-radius: 0.4rem;
 	margin-left: 1.5rem;
+	padding: 10px;
 `;
 
 function Header() {

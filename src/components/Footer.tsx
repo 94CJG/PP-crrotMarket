@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled, { css } from "styled-components"; // styled-components와 css 가져오기
 
 const TextBox = css`
@@ -112,17 +112,9 @@ const BtnStore = styled.a`
 	font-size: 20px;
 `;
 
-const SMB = styled.div`
-	
-`;
-
-const SmbBtn = styled(Link)`
-
-`;
-
-
-
 function Footer() {
+	const location = useLocation();
+	if (location.pathname === '/Login') return null;
 	return (
 		<div className="footer">
 			<div className="footer-inner">
