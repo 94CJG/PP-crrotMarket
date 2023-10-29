@@ -1,7 +1,5 @@
 // import styled from "styled-components";
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
-
 
 interface IForm {
 	userName: string;
