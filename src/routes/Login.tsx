@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { useForm } from 'react-hook-form';
+import ErrorModal from "../ErrorModal";
+import { useState } from "react";
 
-//css 
-
+//css Start
 const All = styled.div`
-	width: 1420px;
+	width: 100%;
 	display: flex;
 	justify-content: center;
 	padding-top: 100px;
@@ -39,12 +40,23 @@ interface IForm {
 	userName: string;
 	password: string;
 }
+//css End
 
 function Login() {
 	const { register, handleSubmit, formState: { errors } } = useForm<IForm>();
+	const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
+
+
 	const onValid = (data: any) => {
-		console.log(data);
+		if(errors.userName || errors.password) {
+			setErrorMessage("아이디 또는 비밀번호가 유효하지 않습니다.");
+			setIsErrorModalOpen(true);
+		} else {
+			console.log('로그인 성공', data);
+		}
 	};
+
 	return (
 		<All >
 			<div className="login-wrap">
@@ -73,7 +85,7 @@ function Login() {
 					}
 						placeholder="ID"
 					/>
-					<p>{errors.userName && errors.userName.message}</p>
+					{/* <p>{errors.userName && errors.userName.message}</p> */}
 
 					<InpuutP>
 						<span>비밀번호</span>
@@ -97,8 +109,9 @@ function Login() {
 					}
 						placeholder="PW"
 					/>
-					<p>{errors.password && errors.password.message}</p>
+					{/* <p>{errors.password && errors.password.message}</p> */}
 					<button type='submit'>로그인하기</button>
+					<ErrorModal isOpen={isErrorModalOpen} message={errorMessage} onRequestClose={() => setIsErrorModalOpen(false)} />
 				</form>
 			</div>
 		</All>
