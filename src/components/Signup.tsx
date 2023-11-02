@@ -39,6 +39,8 @@ const InputSize = styled.input`
 interface IForm {
 	userName: string;
 	password: string;
+	nickName: string;
+
 }
 //css End
 
@@ -47,21 +49,22 @@ function Login() {
 	const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 
-
 	const onValid = (data: any) => {
-		if(errors.userName || errors.password) {
-			setErrorMessage("아이디 또는 비밀번호가 유효하지 않습니다.");
+		console.log('로그인 성공', data);
+	}
+
+	const onInValid = () => {
+		if (!errors.userName || !errors.password || !errors.nickName) {
 			setIsErrorModalOpen(true);
-		} else {
-			console.log('로그인 성공', data);
+			setErrorMessage("");
 		}
-	};
+	}
 
 	return (
 		<All >
 			<div className="login-wrap">
-				<h1 className="title">로그인을 해주세요.</h1>
-				<form onSubmit={handleSubmit(onValid)}>
+				<h1 className="title">회원가입을 해주세요.</h1>
+				<form onSubmit={handleSubmit(onValid, onInValid)}>
 					<InpuutP>
 						<span>아이디</span>
 					</InpuutP>
@@ -79,13 +82,37 @@ function Login() {
 							},
 							maxLength: {
 								value: 10,
-								message: "아이디는 최대 10글자까지 허용됩니다.",
+								message: "아이디는 최대 10글자까지 허용됩니다."
 							},
 						})
 					}
-						placeholder="ID"
+						placeholder="아이디"
 					/>
-					{/* <p>{errors.userName && errors.userName.message}</p> */}
+					<p>{errors.userName && errors.userName.message}</p>
+
+					<InpuutP>
+						<span>닉네임</span>
+					</InpuutP>
+					<InputSize {...register("nickName",
+						{
+							pattern: {
+								message: "닉네임은 영문 숫자 조합으로만 가능합니다.",
+								value: /^[a-z0-9]+$/
+							},
+							required: "닉네임은 필수 항목입니다.",
+							minLength: {
+								value: 4,
+								message: "닉네임은 최소 4글자 이상이어야 합니다.",
+							},
+							maxLength: {
+								value: 10,
+								message: "닉네임은 최대 10글자까지 허용됩니다.",
+							},
+						})
+					}
+						placeholder="닉네임"
+					/>
+					<p>{errors.nickName && errors.nickName.message}</p>
 
 					<InpuutP>
 						<span>비밀번호</span>
@@ -107,10 +134,10 @@ function Login() {
 							},
 						})
 					}
-						placeholder="PW"
+						placeholder="비밀번호"
 					/>
-					{/* <p>{errors.password && errors.password.message}</p> */}
-					<button type='submit'>로그인하기</button>
+					<p>{errors.password && errors.password.message}</p>
+					<button type='submit'>회원가입</button>
 					<ErrorModal isOpen={isErrorModalOpen} message={errorMessage} onRequestClose={() => setIsErrorModalOpen(false)} />
 				</form>
 			</div>

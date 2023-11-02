@@ -9,7 +9,7 @@ import Jobs from "./routes/Jobs";
 import Footer from "./components/Footer";
 import AreaStores from "./routes/AreaStores";
 import Fleamarket from "./routes/Fleamarket";
-import Login from "./routes/Login";
+import Signup from "./components/Signup";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400&display=swap');
@@ -90,8 +90,8 @@ function App() {
         <Route path="/Fleamarket">
           <Fleamarket />
         </Route>
-        <Route path="/Login">
-          <Login />
+        <Route path="/Signup">
+          <Signup />
         </Route>
       </Switch>
       <Footer />
