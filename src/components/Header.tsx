@@ -11,7 +11,7 @@ const TopContainer = styled.div`
 `;
 
 const HdInner = styled.div`
-	width: 1000px;
+	width: 1240px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -49,7 +49,7 @@ const HdInput = styled.input`
 	width: 14rem;
 `;
 
-const Signup = styled(Link)`
+const UserBtn = styled(Link)`
 	background-color: #ffffff;
 	cursor: pointer;
 	border: 1px solid #d1d3d8;
@@ -80,8 +80,9 @@ function Header() {
 				</nav>
 				<div className="search">
 					<HdInput type="text" placeholder="  물품이나 동네를 검색 해보세요" />
-					<Signup to="/Signup" >회원가입</Signup>
-					{/* <Signup>회원가입</Signup> */}
+					<UserBtn to="/Login">로그인</UserBtn>
+					<UserBtn to="/Signup" >회원가입</UserBtn>
+					{/* <UserBtn>회원가입</UserBtn> */}
 				</div>
 			</HdInner>
 		</TopContainer>

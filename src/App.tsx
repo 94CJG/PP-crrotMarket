@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Switch, } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-
 import Header from "./components/Header";
 import Main from "./components/Main";
 import HotItems from "./routes/HotItems";
@@ -9,7 +8,8 @@ import Jobs from "./routes/Jobs";
 import Footer from "./components/Footer";
 import AreaStores from "./routes/AreaStores";
 import Fleamarket from "./routes/Fleamarket";
-import Signup from "./components/Signup";
+import SignUp from "./components/SignUp";
+import Login from "./components/Login";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400&display=swap');
@@ -90,8 +90,11 @@ function App() {
         <Route path="/Fleamarket">
           <Fleamarket />
         </Route>
-        <Route path="/Signup">
-          <Signup />
+        <Route path="/SignUp">
+          <SignUp />
+        </Route>
+        <Route path="/Login">
+          <Login />
         </Route>
       </Switch>
       <Footer />

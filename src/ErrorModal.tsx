@@ -1,5 +1,4 @@
 import Modal from 'react-modal';
-import './modal.css';
 import styled from 'styled-components';
 
 interface IState {
@@ -48,10 +47,9 @@ function ErrorModal({ isOpen, message, onRequestClose }:IState) {
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       style={customStyles}
-    // className="custom-modal"
     >
       <p>{message}</p>
-      <CloseP>아이디 또는 비밀번호가 유효하지 않습니다.</CloseP> {/**30번째줄 test css를 위한 작성 지울예정 */}
+      {/* <CloseP>아이디 또는 비밀번호가 유효하지 않습니다.</CloseP> */}
       <CloseBtn onClick={onRequestClose}>닫기</CloseBtn>
     </Modal>
   );

@@ -1,7 +1,10 @@
-import styled from "styled-components";
 import { useForm } from 'react-hook-form';
-import ErrorModal from "../ErrorModal";
 import { useState } from "react";
+import { Link, useHistory } from 'react-router-dom';
+import styled from "styled-components";
+import ErrorModal from "../ErrorModal";
+import { getValue } from '@testing-library/user-event/dist/utils';
+//import {addIdLocalStorage} from '../LocalStorage'; 나중에 컴포넌트 따로 빼서 적용시켜보기
 
 //css Start
 const All = styled.div`
@@ -36,23 +39,54 @@ const InputSize = styled.input`
 	margin-bottom: 22px;
 `;
 
+//Form 타입지정
 interface IForm {
 	userName: string;
 	password: string;
 	nickName: string;
-
 }
-//css End
 
-function Login() {
-	const { register, handleSubmit, formState: { errors } } = useForm<IForm>();
+
+
+
+//회원가입 함수 시작
+function SignUp() {
+	const { 
+		register, 
+		handleSubmit, 
+		formState: { errors },
+		getValues,
+	} = useForm<IForm>();
 	const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
+	const history = useHistory();
 
-	const onValid = (data: any) => {
-		console.log('로그인 성공', data);
+	const handleCheckId = () => {
+		//ToDo - list
+		//로컬 스토리지 안에 중복확인 버튼 눌렀을 때 저장 또는 비저장이 된다.
+		//그러나 유효성 검사가 실행이 안된다. 내가 정해둔 정규식 표현이 적용이 안됨.
+		//사용자 이름을 가져온다.
+		const userName = getValues('userName');
+		const storedUserName = localStorage.getItem('userName');
+
+		let userNames = storedUserName ? JSON.parse(storedUserName) : [];
+
+		if (!/^[a-z0-9]+$/.test(userName)) {
+			alert("아이디는 a~z, 0~9 조합이어야 하며, 10글자 이하이어야 합니다. 특수문자는 사용 불가능합니다.");
+		} else {
+			userNames.push(userName);
+			localStorage.setItem('userName', JSON.stringify(userNames));
+			alert('사용 가능한 사용자 이름');
+		}
 	}
 
+	//유효성 검사 통과
+	const onValid = (data: any) => {
+		console.log('로그인 성공', data);
+		history.push('/Login');
+	}
+
+	//유효성 검사 실패
 	const onInValid = () => {
 		if (!errors.userName || !errors.password || !errors.nickName) {
 			setIsErrorModalOpen(true);
@@ -88,12 +122,14 @@ function Login() {
 					}
 						placeholder="아이디"
 					/>
+					<button type='submit' id="checkid" onClick={handleCheckId}>중복확인</button>
 					<p>{errors.userName && errors.userName.message}</p>
 
 					<InpuutP>
 						<span>닉네임</span>
 					</InpuutP>
-					<InputSize {...register("nickName",
+					<InputSize 
+					{...register("nickName",
 						{
 							pattern: {
 								message: "닉네임은 영문 숫자 조합으로만 가능합니다.",
@@ -146,4 +182,4 @@ function Login() {
 }
 
 
-export default Login;
+export default SignUp;

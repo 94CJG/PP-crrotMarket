@@ -114,7 +114,7 @@ const BtnStore = styled.a`
 
 function Footer() {
 	const location = useLocation();
-	if (location.pathname === '/Signup') return null;
+	if (location.pathname === '/Signup' || '/Login') return null;
 	return (
 		<div className="footer">
 			<div className="footer-inner">
