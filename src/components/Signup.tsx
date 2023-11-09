@@ -57,21 +57,17 @@ function SignUp() {
 		formState: { errors },
 		getValues,
 	} = useForm<IForm>();
-	const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
-	const [errorMessage, setErrorMessage] = useState('');
+	// const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+	// const [errorMessage, setErrorMessage] = useState('');
 	const history = useHistory();
 
 	const handleCheckId = () => {
-		//ToDo - list
-		//로컬 스토리지 안에 중복확인 버튼 눌렀을 때 저장 또는 비저장이 된다.
-		//그러나 유효성 검사가 실행이 안된다. 내가 정해둔 정규식 표현이 적용이 안됨.
-		//사용자 이름을 가져온다.
 		const userName = getValues('userName');
 		const storedUserName = localStorage.getItem('userName');
 
 		let userNames = storedUserName ? JSON.parse(storedUserName) : [];
 
-		if (!/^[a-z0-9]+$/.test(userName)) {
+		if (!/^[a-z0-9]+$/.test(userName)) { //
 			alert("아이디는 a~z, 0~9 조합이어야 하며, 10글자 이하이어야 합니다. 특수문자는 사용 불가능합니다.");
 		} else {
 			userNames.push(userName);
@@ -86,24 +82,26 @@ function SignUp() {
 		history.push('/Login');
 	}
 
+	//조건부 유성검사 성공or실패
+
 	//유효성 검사 실패
-	const onInValid = () => {
-		if (!errors.userName || !errors.password || !errors.nickName) {
-			setIsErrorModalOpen(true);
-			setErrorMessage("");
-		}
-	}
+	// const onInValid = () => {
+	// 	if (!errors.userName || !errors.password || !errors.nickName) {
+	// 	}
+	// }
 
 	return (
 		<All >
 			<div className="login-wrap">
 				<h1 className="title">회원가입을 해주세요.</h1>
-				<form onSubmit={handleSubmit(onValid, onInValid)}>
+				<form onSubmit={handleSubmit(onValid)}>
 					<InpuutP>
 						<span>아이디</span>
 					</InpuutP>
 
-					<InputSize {...register("userName",
+					<InputSize 
+					type='text'
+					{...register("userName",
 						{
 							pattern: {
 								message: "아이디는 a~z, 0~9 조합 및 10글자 이하로 하여 만들 수 있으며, 특수문자는 사용 불가능 합니다.",
@@ -123,12 +121,14 @@ function SignUp() {
 						placeholder="아이디"
 					/>
 					<button type='submit' id="checkid" onClick={handleCheckId}>중복확인</button>
-					<p>{errors.userName && errors.userName.message}</p>
+					<p style={{color: errors.userName ? 'red' : 'blue'} }>
+						{errors.userName ? errors.userName.message : "통과"}
+						</p>
 
 					<InpuutP>
 						<span>닉네임</span>
 					</InpuutP>
-					<InputSize 
+					<InputSize
 					{...register("nickName",
 						{
 							pattern: {
@@ -153,7 +153,9 @@ function SignUp() {
 					<InpuutP>
 						<span>비밀번호</span>
 					</InpuutP>
-					<InputSize {...register("password",
+					<InputSize 
+					type='password'
+					{...register("password",
 						{
 							pattern: {
 								message: "비밀번호는 a~z, 0~9, 특수문자 !,@,#,^ 조합하여 만들 수 있습니다.",
@@ -174,7 +176,7 @@ function SignUp() {
 					/>
 					<p>{errors.password && errors.password.message}</p>
 					<button type='submit'>회원가입</button>
-					<ErrorModal isOpen={isErrorModalOpen} message={errorMessage} onRequestClose={() => setIsErrorModalOpen(false)} />
+					{/* <ErrorModal isOpen={isErrorModalOpen} message={errorMessage} onRequestClose={() => setIsErrorModalOpen(false)} /> */}
 				</form>
 			</div>
 		</All>
