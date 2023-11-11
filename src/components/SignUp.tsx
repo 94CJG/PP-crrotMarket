@@ -61,22 +61,44 @@ function SignUp() {
 	// const [errorMessage, setErrorMessage] = useState('');
 	const history = useHistory();
 
+	/**
+	 * 기존코드
+	 * - 중복확인을 할 때 마다 아이디가 로컬스토리지에 저장됨.(여러번 중복 확인을 누르면 여러번 들어감)
+	 *
+	 * */
 	const handleCheckId = () => {
+		//폼에서 입력한 아이디
 		const userName = getValues('userName');
+
+		//로컬 스토리지에 있는 아이디
 		const storedUserName = localStorage.getItem('userName');
+		const idArray : String[] = storedUserName&&JSON.parse(storedUserName);
+		console.log(idArray);
 
-		let userNames = storedUserName ? JSON.parse(storedUserName) : [];
+		let isExist:boolean = false;
 
-		if (!/^[a-z0-9]+$/.test(userName)) { //
-			alert("아이디는 a~z, 0~9 조합이어야 하며, 10글자 이하이어야 합니다. 특수문자는 사용 불가능합니다.");
-		} else {
-			userNames.push(userName);
-			localStorage.setItem('userName', JSON.stringify(userNames));
-			alert('사용 가능한 사용자 이름');
+		//폼에서 입력한 아이디와 로컬 스토리지에서 가져온 아이디가 같으면
+		idArray && idArray.forEach(
+			id => {
+				if(id === userName){
+					isExist = true;
+					return;
+				}
+			}
+		)
+
+		//아이디가 있으면
+		if(isExist){
+			alert("아이디 중복");
+		}else{
+			alert("사용 가능한 아이디");
+			// idArray.push(userName);
+			// localStorage.setItem('userName',JSON.stringify(idArray));
 		}
+
 	}
 
-	//유효성 검사 통과
+	//유효성 검사 통과(회원가입 버튼)
 	const onValid = (data: any) => {
 		console.log('로그인 성공', data);
 		history.push('/Login');
