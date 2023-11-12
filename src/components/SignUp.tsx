@@ -100,7 +100,23 @@ function SignUp() {
 
 	//유효성 검사 통과(회원가입 버튼)
 	const onValid = (data: any) => {
-		console.log('로그인 성공', data);
+		console.log('로그인 성공', data.userName);
+
+		//로컬 스토리지 가져오기
+		const storedUserName = localStorage.getItem('userName');
+		const idArray : String[] = storedUserName&&JSON.parse(storedUserName);
+
+		//중복검사 통과한 아이디를 로컬 스토리지에 넣어준다.
+		if(idArray != null){
+			//이미 로컬스토리지가 있으면 있는거를 가져와서 추가만 해준다.
+			idArray.push(data.userName);
+			localStorage.setItem('userName',JSON.stringify(idArray));
+		}else {
+			//초기에 등록된 로컬스토리지가 없으면 새롭게 배열을 만들어서 넣으준다.
+			let idArray : String[] = [data.userName];
+			localStorage.setItem('userName',JSON.stringify(idArray));
+		}
+
 		history.push('/Login');
 	}
 
