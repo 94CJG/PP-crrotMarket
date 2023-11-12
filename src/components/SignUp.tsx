@@ -46,9 +46,6 @@ interface IForm {
 	nickName: string;
 }
 
-
-
-
 //회원가입 함수 시작
 function SignUp() {
 	const {
@@ -97,7 +94,6 @@ function SignUp() {
 		}
 		else {
 			alert("사용 가능한 아이디");
-
 		}
 	}
 
