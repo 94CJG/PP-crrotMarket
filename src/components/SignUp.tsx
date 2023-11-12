@@ -51,9 +51,9 @@ interface IForm {
 
 //회원가입 함수 시작
 function SignUp() {
-	const { 
-		register, 
-		handleSubmit, 
+	const {
+		register,
+		handleSubmit,
 		formState: { errors },
 		getValues,
 	} = useForm<IForm>();
@@ -67,39 +67,53 @@ function SignUp() {
 	 *
 	 * */
 	const handleCheckId = () => {
-		//폼에서 입력한 아이디
+		//폼에서 입력한 아이디 (중복확인 버튼만 적용)
 		const userName = getValues('userName');
 
-		//로컬 스토리지에 있는 아이디
+		//로컬 스토리지에 값을 가져오기 전에 확인 (중복확인 버튼만 적용)
 		const storedUserName = localStorage.getItem('userName');
-		const idArray : String[] = storedUserName&&JSON.parse(storedUserName);
-		console.log(idArray);
+		const idArray: String[] = storedUserName ? JSON.parse(storedUserName) : [];
+		let isExist: boolean = false;
 
-		let isExist:boolean = false;
-
-		//폼에서 입력한 아이디와 로컬 스토리지에서 가져온 아이디가 같으면
+		//폼에서 입력한 아이디와 로컬 스토리지에서 가져온 아이디가 같으면 (중복확인 버튼만 적용)
 		idArray && idArray.forEach(
 			id => {
-				if(id === userName){
+				if (id === userName) {
 					isExist = true;
 					return;
 				}
 			}
 		)
 
-		//아이디가 있으면
-		if(isExist){
+		//아이디가 있으면 (중복확인 버튼만 적용)
+		if (isExist) {
 			alert("아이디 중복");
-		}else{
-			alert("사용 가능한 아이디");
-			// idArray.push(userName);
-			// localStorage.setItem('userName',JSON.stringify(idArray));
 		}
+		else if(userName.length < 4 || userName.length > 10) {
+			alert('아이디는 4글자 이상 10글자 이하 가능 합니다.')
+		}
+		else if(!/^[a-z0-9]+$/.test(userName)) {
+			alert('아이디는 a~z, 0~9 조합이어야 하며, 10글자 이하이어야 합니다. 특수문자는 사용 불가능합니다.');
+		}
+		else {
+			alert("사용 가능한 아이디");
 
+		}
 	}
 
-	//유효성 검사 통과(회원가입 버튼)
+	//유효성 검사 통과(회원가입 버튼 눌렀을 때 적용)
 	const onValid = (data: any) => {
+		//폼에서 입력한 아이디 값
+		const userNameSave = getValues('userName');
+
+		//로컬 스토리지에 값을 가져오기전에 확인
+		const storedUserNameGet = localStorage.getItem('userName');
+		const idArray: String[] = storedUserNameGet ? JSON.parse(storedUserNameGet) : [];
+
+		//로컬 스토리지에 아이디 값을 저장
+		idArray.push(userNameSave);
+		localStorage.setItem('userName', JSON.stringify(idArray));
+
 		console.log('로그인 성공', data);
 		history.push('/Login');
 	}
@@ -121,53 +135,53 @@ function SignUp() {
 						<span>아이디</span>
 					</InpuutP>
 
-					<InputSize 
-					type='text'
-					{...register("userName",
-						{
-							pattern: {
-								message: "아이디는 a~z, 0~9 조합 및 10글자 이하로 하여 만들 수 있으며, 특수문자는 사용 불가능 합니다.",
-								value: /^[a-z0-9]+$/
-							},
-							required: "아이디는 필수 항목입니다.",
-							minLength: {
-								value: 4,
-								message: "아이디는 최소 4글자 이상이어야 합니다.",
-							},
-							maxLength: {
-								value: 10,
-								message: "아이디는 최대 10글자까지 허용됩니다."
-							},
-						})
-					}
+					<InputSize
+						type='text'
+						{...register("userName",
+							{
+								pattern: {
+									message: "아이디는 a~z, 0~9 조합 및 10글자 이하로 하여 만들 수 있으며, 특수문자는 사용 불가능 합니다.",
+									value: /^[a-z0-9]+$/
+								},
+								required: "아이디는 필수 항목입니다.",
+								minLength: {
+									value: 4,
+									message: "아이디는 최소 4글자 이상이어야 합니다.",
+								},
+								maxLength: {
+									value: 10,
+									message: "아이디는 최대 10글자까지 허용됩니다."
+								},
+							})
+						}
 						placeholder="아이디"
 					/>
 					<button type='submit' id="checkid" onClick={handleCheckId}>중복확인</button>
-					<p style={{color: errors.userName ? 'red' : 'blue'} }>
-						{errors.userName ? errors.userName.message : "통과"}
-						</p>
+					<p style={{ color: errors.userName ? 'red' : 'blue' }}>
+						{errors.userName ? errors.userName.message : ""}
+					</p>
 
 					<InpuutP>
 						<span>닉네임</span>
 					</InpuutP>
 					<InputSize
-					{...register("nickName",
-						{
-							pattern: {
-								message: "닉네임은 영문 숫자 조합으로만 가능합니다.",
-								value: /^[a-z0-9]+$/
-							},
-							required: "닉네임은 필수 항목입니다.",
-							minLength: {
-								value: 4,
-								message: "닉네임은 최소 4글자 이상이어야 합니다.",
-							},
-							maxLength: {
-								value: 10,
-								message: "닉네임은 최대 10글자까지 허용됩니다.",
-							},
-						})
-					}
+						{...register("nickName",
+							{
+								pattern: {
+									message: "닉네임은 영문 숫자 조합으로만 가능합니다.",
+									value: /^[a-z0-9]+$/
+								},
+								required: "닉네임은 필수 항목입니다.",
+								minLength: {
+									value: 4,
+									message: "닉네임은 최소 4글자 이상이어야 합니다.",
+								},
+								maxLength: {
+									value: 10,
+									message: "닉네임은 최대 10글자까지 허용됩니다.",
+								},
+							})
+						}
 						placeholder="닉네임"
 					/>
 					<p>{errors.nickName && errors.nickName.message}</p>
@@ -175,25 +189,25 @@ function SignUp() {
 					<InpuutP>
 						<span>비밀번호</span>
 					</InpuutP>
-					<InputSize 
-					type='password'
-					{...register("password",
-						{
-							pattern: {
-								message: "비밀번호는 a~z, 0~9, 특수문자 !,@,#,^ 조합하여 만들 수 있습니다.",
-								value: /^[a-zA-Z0-9!@#^]+$/
-							},
-							required: "비밀번호는 필수 항목 입니다.",
-							minLength: {
-								value: 4,
-								message: "비밀번호는 최소 4글자 이상이어야 합니다.",
-							},
-							maxLength: {
-								value: 10,
-								message: "비밀번호는 최대 10글자까지 허용됩니다.",
-							},
-						})
-					}
+					<InputSize
+						type='password'
+						{...register("password",
+							{
+								pattern: {
+									message: "비밀번호는 a~z, 0~9, 특수문자 !,@,#,^ 조합하여 만들 수 있습니다.",
+									value: /^[a-zA-Z0-9!@#^]+$/
+								},
+								required: "비밀번호는 필수 항목 입니다.",
+								minLength: {
+									value: 4,
+									message: "비밀번호는 최소 4글자 이상이어야 합니다.",
+								},
+								maxLength: {
+									value: 10,
+									message: "비밀번호는 최대 10글자까지 허용됩니다.",
+								},
+							})
+						}
 						placeholder="비밀번호"
 					/>
 					<p>{errors.password && errors.password.message}</p>
