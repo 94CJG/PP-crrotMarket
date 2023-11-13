@@ -3,9 +3,14 @@ import { useState } from "react";
 import { Link, useHistory } from 'react-router-dom';
 import styled from "styled-components";
 import ErrorModal from "../ErrorModal";
-import { getValue } from '@testing-library/user-event/dist/utils';
+import {getValue, isDisabled} from '@testing-library/user-event/dist/utils';
 //import {addIdLocalStorage} from '../LocalStorage'; 나중에 컴포넌트 따로 빼서 적용시켜보기
 
+//수정사항
+/**
+ * 회원가입 버튼 눌렀을 때 아이디 중복값을 확인 해도 회원가입은 됨.
+ * 
+ */
 //css Start
 const All = styled.div`
 	width: 100%;
@@ -46,9 +51,6 @@ interface IForm {
 	nickName: string;
 }
 
-
-
-
 //회원가입 함수 시작
 function SignUp() {
 	const {
@@ -57,9 +59,13 @@ function SignUp() {
 		formState: { errors },
 		getValues,
 	} = useForm<IForm>();
+	const history = useHistory();
+	const [isIdValid, setIsIdValid] = useState(true);
+	//버튼 상태 체크
+	const [buttonState, setButtonState] = useState(true);
+
 	// const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 	// const [errorMessage, setErrorMessage] = useState('');
-	const history = useHistory();
 
 	/**
 	 * 기존코드
@@ -88,49 +94,54 @@ function SignUp() {
 		//아이디가 있으면 (중복확인 버튼만 적용)
 		if (isExist) {
 			alert("아이디 중복");
+			setIsIdValid(false);
+			setButtonState(true);
 		}
-		else if(userName.length < 4 || userName.length > 10) {
+		else if (userName.length < 4 || userName.length > 10) {
 			alert('아이디는 4글자 이상 10글자 이하 가능 합니다.')
 		}
-		else if(!/^[a-z0-9]+$/.test(userName)) {
+		else if (!/^[a-z0-9]+$/.test(userName)) {
 			alert('아이디는 a~z, 0~9 조합이어야 하며, 10글자 이하이어야 합니다. 특수문자는 사용 불가능합니다.');
 		}
 		else {
 			alert("사용 가능한 아이디");
-
+			setIsIdValid(true);
+			setButtonState(false);
 		}
 	}
 
 	//유효성 검사 통과(회원가입 버튼 눌렀을 때 적용)
 	const onValid = (data: any) => {
+
 		//폼에서 입력한 아이디 값
 		const userNameSave = getValues('userName');
-
-		//로컬 스토리지에 값을 가져오기전에 확인
+		//로컬스토리지에 아이디 값을 가져오기전에 확인
 		const storedUserNameGet = localStorage.getItem('userName');
 		const idArray: String[] = storedUserNameGet ? JSON.parse(storedUserNameGet) : [];
 
-		//로컬 스토리지에 아이디 값을 저장
-		idArray.push(userNameSave);
-		localStorage.setItem('userName', JSON.stringify(idArray));
-
-		console.log('로그인 성공', data);
-		history.push('/Login');
+		if (isIdValid) {
+			/**
+			* 아이디 중복값이 존재 할 경우 onInvalid 함수 실행
+			* 아이디 중복값이 존재 하는지 판단.
+			* 아이디 중복값이 존재 하는 경우 중복확인 버튼 클릭시 얼랏창 등장.
+			* 그래도 지속적으로 데이터를 입력후 회원가입 버튼을 눌렀을 때, 
+			* "아이디를 확인해주세요." 라는 얼랏창과 버튼 클릭을  하여도 아무런 동작 없이 하기.
+			*/
+			//로컬스토리지에 아이디 값을 저장
+			idArray.push(userNameSave);
+			localStorage.setItem('userName', JSON.stringify(idArray));
+			console.log('로그인 성공', data);
+			history.push('/Login');
+		} else {
+			alert("아이디 중복 확인을 해주세요.");
+		}
 	}
-
-	//조건부 유성검사 성공or실패
-
-	//유효성 검사 실패
-	// const onInValid = () => {
-	// 	if (!errors.userName || !errors.password || !errors.nickName) {
-	// 	}
-	// }
 
 	return (
 		<All >
 			<div className="login-wrap">
 				<h1 className="title">회원가입을 해주세요.</h1>
-				<form onSubmit={handleSubmit(onValid)}>
+				<form onSubmit={handleSubmit(onValid,)}>
 					<InpuutP>
 						<span>아이디</span>
 					</InpuutP>
@@ -211,7 +222,7 @@ function SignUp() {
 						placeholder="비밀번호"
 					/>
 					<p>{errors.password && errors.password.message}</p>
-					<button type='submit'>회원가입</button>
+					<button type='submit' disabled={buttonState}>회원가입</button>
 					{/* <ErrorModal isOpen={isErrorModalOpen} message={errorMessage} onRequestClose={() => setIsErrorModalOpen(false)} /> */}
 				</form>
 			</div>
