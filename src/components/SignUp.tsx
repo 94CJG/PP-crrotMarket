@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useHistory } from 'react-router-dom';
 import styled from "styled-components";
 import ErrorModal from "../ErrorModal";
-import { getValue } from '@testing-library/user-event/dist/utils';
+import {getValue, isDisabled} from '@testing-library/user-event/dist/utils';
 //import {addIdLocalStorage} from '../LocalStorage'; 나중에 컴포넌트 따로 빼서 적용시켜보기
 
 //수정사항
@@ -61,6 +61,9 @@ function SignUp() {
 	} = useForm<IForm>();
 	const history = useHistory();
 	const [isIdValid, setIsIdValid] = useState(true);
+	//버튼 상태 체크
+	const [buttonState, setButtonState] = useState(true);
+
 	// const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 	// const [errorMessage, setErrorMessage] = useState('');
 
@@ -92,6 +95,7 @@ function SignUp() {
 		if (isExist) {
 			alert("아이디 중복");
 			setIsIdValid(false);
+			setButtonState(true);
 		}
 		else if (userName.length < 4 || userName.length > 10) {
 			alert('아이디는 4글자 이상 10글자 이하 가능 합니다.')
@@ -102,11 +106,13 @@ function SignUp() {
 		else {
 			alert("사용 가능한 아이디");
 			setIsIdValid(true);
+			setButtonState(false);
 		}
 	}
 
 	//유효성 검사 통과(회원가입 버튼 눌렀을 때 적용)
 	const onValid = (data: any) => {
+
 		//폼에서 입력한 아이디 값
 		const userNameSave = getValues('userName');
 		//로컬스토리지에 아이디 값을 가져오기전에 확인
@@ -216,7 +222,7 @@ function SignUp() {
 						placeholder="비밀번호"
 					/>
 					<p>{errors.password && errors.password.message}</p>
-					<button type='submit'>회원가입</button>
+					<button type='submit' disabled={buttonState}>회원가입</button>
 					{/* <ErrorModal isOpen={isErrorModalOpen} message={errorMessage} onRequestClose={() => setIsErrorModalOpen(false)} /> */}
 				</form>
 			</div>
