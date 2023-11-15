@@ -1,15 +1,21 @@
 import { useForm } from 'react-hook-form';
 import { useState } from "react";
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from "styled-components";
-import ErrorModal from "../ErrorModal";
-import { getValue } from '@testing-library/user-event/dist/utils';
+//import ErrorModal from "../ErrorModal";
 //import {addIdLocalStorage} from '../LocalStorage'; 나중에 컴포넌트 따로 빼서 적용시켜보기
 
 //수정사항
 /**
- * 회원가입 버튼 눌렀을 때 아이디 중복값을 확인 해도 회원가입은 됨.
- * 
+ * 2023.11.15 => 모각 챌린지를 위하여 잠시 중단.
+ * 유효성 검사
+ * 중복확인 버튼
+ * 회원가입 버튼
+ * 1. register을 함수로 변경 한다.
+ * ㄴ 유효성 검사 내용과 값들을 채운다.
+ * ㄴ 채운 내용을 return값으로 불러올 수 있게 한다.
+ * ㄴ 이때 내가 원하는 유효성 검사를 할 수 있게 만든다.
+ * ㄴ 중복확인 버튼을 눌렀을 때 1~4개의 글자, 글자 길이 제한, 
  */
 //css Start
 const All = styled.div`
@@ -60,15 +66,25 @@ function SignUp() {
 		getValues,
 	} = useForm<IForm>();
 	const history = useHistory();
-	const [isIdValid, setIsIdValid] = useState(true);
-	// const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
-	// const [errorMessage, setErrorMessage] = useState('');
+	const [isIdValid, setIsIdValid] = useState(false);
+	const [buttonState, setButtonState] = useState(true);
 
-	/**
-	 * 기존코드
-	 * - 중복확인을 할 때 마다 아이디가 로컬스토리지에 저장됨.(여러번 중복 확인을 누르면 여러번 들어감)
-	 *
-	 * */
+	//유효성 검사를 함수를 통해 작업하기
+	// const validateUserName = (userName: string) => {
+	// 	const userNameValidation = register('userName', {
+	// 		required: "아이디는 필수 항목입니다.",
+	// 		minLength: {
+	// 			value: 4,
+	// 			message: "아이디는 최소 4글자 이상이어야 합니다.",
+	// 		},
+	// 		maxLength: {
+	// 			value: 10,
+	// 			message:"아이디는 최대 10글자까지 허용됩니다."
+	// 		},
+	// 	});
+	// 	return validateUserName;
+	// }
+
 	const handleCheckId = () => {
 		//폼에서 입력한 아이디 (중복확인 버튼만 적용)
 		const userName = getValues('userName');
@@ -79,7 +95,7 @@ function SignUp() {
 		let isExist: boolean = false;
 
 		//폼에서 입력한 아이디와 로컬 스토리지에서 가져온 아이디가 같으면 (중복확인 버튼만 적용)
-		idArray && idArray.forEach(
+		idArray.forEach(
 			id => {
 				if (id === userName) {
 					isExist = true;
@@ -92,6 +108,7 @@ function SignUp() {
 		if (isExist) {
 			alert("아이디 중복");
 			setIsIdValid(false);
+			setButtonState(true);
 		}
 		else if (userName.length < 4 || userName.length > 10) {
 			alert('아이디는 4글자 이상 10글자 이하 가능 합니다.')
@@ -102,6 +119,7 @@ function SignUp() {
 		else {
 			alert("사용 가능한 아이디");
 			setIsIdValid(true);
+			setButtonState(false);
 		}
 	}
 
@@ -109,24 +127,19 @@ function SignUp() {
 	const onValid = (data: any) => {
 		//폼에서 입력한 아이디 값
 		const userNameSave = getValues('userName');
+
 		//로컬스토리지에 아이디 값을 가져오기전에 확인
 		const storedUserNameGet = localStorage.getItem('userName');
 		const idArray: String[] = storedUserNameGet ? JSON.parse(storedUserNameGet) : [];
 
 		if (isIdValid) {
-			/**
-			* 아이디 중복값이 존재 할 경우 onInvalid 함수 실행
-			* 아이디 중복값이 존재 하는지 판단.
-			* 아이디 중복값이 존재 하는 경우 중복확인 버튼 클릭시 얼랏창 등장.
-			* 그래도 지속적으로 데이터를 입력후 회원가입 버튼을 눌렀을 때, 
-			* "아이디를 확인해주세요." 라는 얼랏창과 버튼 클릭을  하여도 아무런 동작 없이 하기.
-			*/
 			//로컬스토리지에 아이디 값을 저장
 			idArray.push(userNameSave);
 			localStorage.setItem('userName', JSON.stringify(idArray));
 			console.log('로그인 성공', data);
 			history.push('/Login');
-		} else {
+		}
+		else {
 			alert("아이디 중복 확인을 해주세요.");
 		}
 	}
@@ -161,8 +174,8 @@ function SignUp() {
 						}
 						placeholder="아이디"
 					/>
-					<button type='submit' id="checkid" onClick={handleCheckId}>중복확인</button>
-					<p style={{ color: errors.userName ? 'red' : 'blue' }}>
+					<button type='button' id="checkid" onClick={handleCheckId}>중복확인</button>
+					<p style={{ color: errors.userName ? 'red' : '' }}>
 						{errors.userName ? errors.userName.message : ""}
 					</p>
 
@@ -189,7 +202,9 @@ function SignUp() {
 						}
 						placeholder="닉네임"
 					/>
-					<p>{errors.nickName && errors.nickName.message}</p>
+					<p style={{ color: errors.nickName ? 'red' : ''}}>
+						{errors.nickName && errors.nickName.message}
+					</p>
 
 					<InpuutP>
 						<span>비밀번호</span>
@@ -215,8 +230,10 @@ function SignUp() {
 						}
 						placeholder="비밀번호"
 					/>
-					<p>{errors.password && errors.password.message}</p>
-					<button type='submit'>회원가입</button>
+					<p style={{ color: errors.password ? 'red' : ''}}>
+						{errors.password && errors.password.message}
+					</p>
+					<button type='submit' >회원가입</button>
 					{/* <ErrorModal isOpen={isErrorModalOpen} message={errorMessage} onRequestClose={() => setIsErrorModalOpen(false)} /> */}
 				</form>
 			</div>
